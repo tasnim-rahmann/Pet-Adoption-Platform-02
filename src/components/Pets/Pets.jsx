@@ -1,34 +1,13 @@
-import { useEffect, useState } from "react";
-import apiClient from "../../services/api-client";
+import { useState } from "react";
 import ErrorAlert from "../ErrorAlert";
 import PetList from "./PetList";
 import Pagination from "./Pagination";
+import useFetchPets from "../../hooks/useFetchPets";
+import FilterSection from "./FilterSection";
 
 const Pet = () => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [pets, setPets] = useState([]);
-    const [error, setError] = useState("");
-    const [totalPage, setTotalPage] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
-
-    const fetchPets = async () => {
-        setIsLoading(true);
-        try {
-            const response = await apiClient.get(`/pets/?page=${currentPage}`);
-            const data = await response.data;
-            setPets(data.results);
-            setTotalPage(Math.ceil(data.count / 10));
-        } catch (err) {
-            setError(err);
-            console.log(err);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        fetchPets();
-    }, [currentPage]);
+    const { pets, isLoading, error, totalPage } = useFetchPets(currentPage);
 
     return (
         <div className="px-4 lg:px-40 my-8 lg:my-12">
@@ -40,6 +19,7 @@ const Pet = () => {
                 <ErrorAlert />
             ) : (
                 <>
+                    <FilterSection />
                     <PetList pets={pets} />
                     <Pagination totalPage={totalPage} currentPage={currentPage} handlePageChange={setCurrentPage} />
                 </>
