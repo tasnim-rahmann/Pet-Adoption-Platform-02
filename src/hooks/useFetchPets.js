@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
 
-const useFetchPets = (currentPage) => {
+const useFetchPets = (currentPage, priceRange, selectedCategory, searchFor, ordering) => {
     const [isLoading, setIsLoading] = useState(false);
     const [pets, setPets] = useState([]);
     const [error, setError] = useState("");
@@ -9,9 +9,10 @@ const useFetchPets = (currentPage) => {
 
     useEffect(() => {
         const fetchPets = async () => {
+            const url = `/pets/?category_id=${selectedCategory}&price__gt=${priceRange[0]}&price__lt=${priceRange[1]}&page=${currentPage}&search=${searchFor}&ordering=${ordering}`;
             setIsLoading(true);
             try {
-                const response = await apiClient.get(`/pets/?page=${currentPage}`);
+                const response = await apiClient.get(url);
                 const data = await response.data;
                 setPets(data.results);
                 setTotalPage(Math.ceil(data.count / 10));
@@ -23,7 +24,7 @@ const useFetchPets = (currentPage) => {
             }
         };
         fetchPets();
-    }, [currentPage]);
+    }, [currentPage, priceRange, selectedCategory, searchFor, ordering]);
 
     return { pets, isLoading, error, totalPage };
 };
