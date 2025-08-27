@@ -1,0 +1,76 @@
+import { useForm } from "react-hook-form";
+import useAuthContext from "../hooks/useAuthContext";
+import ErrorAlert from "../components/ErrorAlert";
+import { useNavigate } from "react-router";
+import { useState } from "react";
+
+const Login = () => {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
+    const { errorMessege, loginUser } = useAuthContext();
+    const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
+
+    const onSubmit = async (data) => {
+        setIsLoading(true);
+        try {
+            await loginUser(data);
+            navigate("/dashboard");
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    return (
+        <div className="my-12 lg:my-2 lg:h-screen flex items-center justify-center">
+            <div className="w-full lg:max-w-sm border-1 p-4 m-2 lg:mb-40">
+                <h1 className="text-2xl lg:text-3xl font-medium mb-2">Login Form</h1>
+                {errorMessege && <ErrorAlert errorMessege={errorMessege} />}
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className="mt-2">
+                        <label htmlFor="email" className="text-sm">Enter Your Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            className="w-full outline-0 border-1 p-3 rounded-sm mt-2"
+                            placeholder="Type your email here"
+                            {...register("email", { required: "Email is required" })}
+                        />
+                        {errors.email && (
+                            <span className="text-sm lable-text-alt text-error">{errors.email.message}</span>
+                        )}
+                    </div>
+
+                    <div className="mt-4">
+                        <label htmlFor="password" className="text-sm">Enter Your Password</label>
+                        <input
+                            type="password"
+                            id="password"
+                            className="w-full outline-0 border-1 p-3 rounded-sm mt-2"
+                            placeholder="Type your password here"
+                            {...register("password", { required: "Password is required" })}
+                        />
+                        {errors.password && (
+                            <span className="text-sm lable-text-alt text-error">{errors.password.message}</span>
+                        )}
+                    </div>
+                    <button
+                        onClick={() => loginUser("admin@gmail.com", "1234")}
+                        type="submit"
+                        className="mt-4 lg:mt-6 bg-[#1C4A2A] px-6 py-2 rounded-sm text-white font-medium cursor-pointer w-full"
+                        disabled={isLoading}
+                    >
+                        {isLoading ? "Loging In" : "Login"}
+                    </button>
+                </form>
+            </div>
+        </div>
+    );
+};
+
+export default Login;
