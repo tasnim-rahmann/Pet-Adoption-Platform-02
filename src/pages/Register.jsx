@@ -26,7 +26,7 @@ const Register = () => {
 
     return (
         <div className="my-12 lg:my-20 flex items-center justify-center">
-            <div className="w-full lg:max-w-sm border-1 p-4 m-2 flex flex-col">
+            <div className="w-full lg:max-w-lg shadow-xl px-4 lg:px-12 py-4 lg:py-12 m-2 flex flex-col">
                 <h1 className="text-2xl lg:text-3xl font-medium mb-4">Registration Form</h1>
                 {errorMessage && <ErrorAlert errorMessege={errorMessage} />}
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -98,7 +98,7 @@ const Register = () => {
 
                     <button
                         type="submit"
-                        className="mt-4 lg:mt-6 bg-[#1C4A2A] px-6 py-2 rounded-sm text-white font-medium cursor-pointer"
+                        className="mt-4 lg:mt-6 bg-[#1C4A2A] px-6 py-2 rounded-sm text-white font-medium cursor-pointer w-full"
                         disabled={isLoading}
                     >
                         {isLoading ? "Registering" : "Register"}

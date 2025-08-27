@@ -28,7 +28,7 @@ const Login = () => {
 
     return (
         <div className="my-12 lg:my-40 flex items-center justify-center">
-            <div className="w-full lg:max-w-sm border-1 p-4 m-2">
+            <div className="w-full lg:max-w-lg shadow-xl p-4 lg:p-12 m-2">
                 <h1 className="text-2xl lg:text-3xl font-medium mb-2">Login Form</h1>
                 {errorMessege && <ErrorAlert errorMessege={errorMessege} />}
                 <form onSubmit={handleSubmit(onSubmit)}>

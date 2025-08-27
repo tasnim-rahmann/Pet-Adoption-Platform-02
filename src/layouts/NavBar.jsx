@@ -56,16 +56,16 @@ const NavBar = () => {
                                 </div>
                             </div>
                             <span
-                                className="hover:-translate-y-0.5 cursor-pointer"
+                                className="btn btn-circle cursor-pointer"
                                 onClick={handleOpen}
                             >
-                                <FaUserCircle size={30} />
+                                <FaUserCircle size={20} />
                             </span>
                             {isOpen && (
-                                <div className="absolute top-15">
-                                    <ul className="bg-gray-200 rounded-sm">
-                                        <Link to="/dashboard"><li className="px-3 py-1 hover:bg-gray-300" onClick={() => setIsOpen(false)}>Dashboard</li></Link>
-                                        <Link to="/" onClick={logoutUser}><li className="px-3 py-1 hover:bg-gray-300" onClick={() => setIsOpen(false)}>Log out</li></Link>
+                                <div className="absolute top-15 right-7 dropdown z-10">
+                                    <ul className="bg-gray-100 rounded-sm">
+                                        <Link to="/dashboard"><li className="px-4 py-1 hover:bg-gray-200" onClick={() => setIsOpen(false)}>Dashboard</li></Link>
+                                        <Link to="/" onClick={logoutUser}><li className="px-4 py-1 hover:bg-gray-200" onClick={() => setIsOpen(false)}>Log out</li></Link>
                                     </ul>
                                 </div>
                             )}
