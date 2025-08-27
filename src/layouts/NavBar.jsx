@@ -7,7 +7,7 @@ import { FaUserCircle } from "react-icons/fa";
 
 const NavBar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
-    const { user } = useAuthContext();
+    const { user, logoutUser } = useAuthContext();
     const [isOpen, setIsOpen] = useState(false);
 
     const handleOpen = () => {
@@ -65,7 +65,7 @@ const NavBar = () => {
                                 <div className="absolute top-15">
                                     <ul className="bg-gray-200 rounded-sm">
                                         <Link to="/dashboard"><li className="px-3 py-1 hover:bg-gray-300" onClick={() => setIsOpen(false)}>Dashboard</li></Link>
-                                        <Link to=""><li className="px-3 py-1 hover:bg-gray-300" onClick={() => setIsOpen(false)}>Log out</li></Link>
+                                        <Link to="/" onClick={logoutUser}><li className="px-3 py-1 hover:bg-gray-300" onClick={() => setIsOpen(false)}>Log out</li></Link>
                                     </ul>
                                 </div>
                             )}
@@ -119,7 +119,7 @@ const NavBar = () => {
                         <Link to="/faq"><li onClick={() => setMenuOpen(false)}>FaQ</li></Link>
                         <Link to="/dashboard"><li onClick={() => setMenuOpen(false)}>Dashboard</li></Link>
                         {user ? (
-                            <Link to=""><li onClick={() => setMenuOpen(false)}>Log out</li></Link>
+                            <Link to="/" onClick={logoutUser}><li onClick={() => setMenuOpen(false)}>Log out</li></Link>
                         ) : (
                             <>
                                 <li>

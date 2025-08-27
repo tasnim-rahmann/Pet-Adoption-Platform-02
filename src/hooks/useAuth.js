@@ -3,49 +3,86 @@ import apiClient from "../services/api-client";
 
 const useAuth = () => {
     const [user, setUser] = useState(null);
-    const [errorMessege, setError] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
+    // Get token from localStorage
     const getToken = () => {
         const token = localStorage.getItem("authToken");
         return token ? JSON.parse(token) : null;
     };
+
     const [authToken, setAuthToken] = useState(getToken());
 
-
+    // Fetch user whenever token changes
     useEffect(() => {
-        if (authToken) fetchUserProfile();
+        if (authToken) fetchUserProfile(authToken);
     }, [authToken]);
 
-    // Fetch User
-    const fetchUserProfile = async () => {
+    // Fetch user profile using a token
+    const fetchUserProfile = async (token = authToken) => {
+        if (!token) return;
         try {
             const response = await apiClient.get("/auth/users/me/", {
-                headers: { Authorization: `JWT ${authToken.access}` }
+                headers: { Authorization: `JWT ${token.access}` },
             });
             setUser(response.data);
         } catch (err) {
             console.log("Fetch user error:", err.response?.data || err.message);
+            setErrorMessage("Failed to fetch user profile.");
         }
     };
 
-    // Login User
+    // Login user
     const loginUser = async (userData) => {
-        setError("");
+        setErrorMessage("");
         try {
             const response = await apiClient.post("/auth/jwt/create/", userData);
-            setAuthToken(response.data);
-            localStorage.setItem("authToken", JSON.stringify(response.data));
+            const token = response.data;
 
-            // after login featch user
-            await fetchUserProfile();
+            // Save token to state and localStorage
+            setAuthToken(token);
+            localStorage.setItem("authToken", JSON.stringify(token));
+
+            // Fetch user using the returned token
+            await fetchUserProfile(token);
         } catch (err) {
-            setError(err.response?.data.detail);
+            const message =
+                err.response?.data?.detail || JSON.stringify(err.response?.data) || err.message;
+            setErrorMessage(message);
+            throw err;
         }
     };
 
-    // Register User
+    // Register user
+    const registerUser = async (userData) => {
+        setErrorMessage("");
+        try {
+            // Register user
+            await apiClient.post("/auth/users/", userData);
 
-    return { user, errorMessege, loginUser };
+            // Auto-login after registration
+            await loginUser({ email: userData.email, password: userData.password });
+        } catch (err) {
+            const message =
+                err.response?.data
+                    ? Object.entries(err.response.data)
+                        .map(([key, value]) => `${key}: ${value.join(" ")}`)
+                        .join(" | ")
+                    : err.message;
+            setErrorMessage(message);
+            throw err;
+        }
+    };
+
+    // Logout user
+    const logoutUser = () => {
+        setUser(null);
+        setAuthToken(null);
+        localStorage.removeItem("authToken");
+        window.location.reload();
+    };
+
+    return { user, errorMessage, loginUser, registerUser, logoutUser };
 };
 
 export default useAuth;

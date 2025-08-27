@@ -18,7 +18,7 @@ const Login = () => {
         setIsLoading(true);
         try {
             await loginUser(data);
-            navigate("/dashboard");
+            navigate("/");
         } catch (err) {
             console.log(err);
         } finally {
@@ -27,8 +27,8 @@ const Login = () => {
     };
 
     return (
-        <div className="my-12 lg:my-2 lg:h-screen flex items-center justify-center">
-            <div className="w-full lg:max-w-sm border-1 p-4 m-2 lg:mb-40">
+        <div className="my-12 lg:my-40 flex items-center justify-center">
+            <div className="w-full lg:max-w-sm border-1 p-4 m-2">
                 <h1 className="text-2xl lg:text-3xl font-medium mb-2">Login Form</h1>
                 {errorMessege && <ErrorAlert errorMessege={errorMessege} />}
                 <form onSubmit={handleSubmit(onSubmit)}>
