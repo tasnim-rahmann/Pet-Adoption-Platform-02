@@ -7,10 +7,13 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Dashboard from "../pages/Dashboard";
 import PrivateRoute from "../components/PrivateRoute";
+import DashboardLayout from "../layouts/DashboardLayout";
+import Profile from "../pages/Profile";
 
 const AppRoutes = () => {
     return (
         <Routes>
+            {/* Public Routes */}
             <Route element={<MainLayout />}>
                 <Route path="/" element={<Home />} />
                 <Route path="pets" element={<PetPage />} />
@@ -18,14 +21,17 @@ const AppRoutes = () => {
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />
             </Route>
+            {/* Private Routes */}
             <Route
                 path="dashboard"
                 element={
                     <PrivateRoute>
-                        <Dashboard />
+                        <DashboardLayout />
                     </PrivateRoute>
-                }
-            />
+                }>
+                <Route index element={<Dashboard />} />
+                <Route path="profile" element={<Profile />} />
+            </Route>
         </Routes>
     );
 };

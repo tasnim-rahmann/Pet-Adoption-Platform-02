@@ -63,9 +63,9 @@ const NavBar = () => {
                             </span>
                             {isOpen && (
                                 <div className="absolute top-15 right-7 dropdown z-10">
-                                    <ul className="bg-gray-100 rounded-sm">
-                                        <Link to="/dashboard"><li className="px-4 py-1 hover:bg-gray-200" onClick={() => setIsOpen(false)}>Dashboard</li></Link>
-                                        <Link to="/" onClick={logoutUser}><li className="px-4 py-1 hover:bg-gray-200" onClick={() => setIsOpen(false)}>Log out</li></Link>
+                                    <ul className="bg-gray-100 rounded-md">
+                                        <Link to="/dashboard"><li className="px-6 py-1 hover:bg-gray-200" onClick={() => setIsOpen(false)}>Dashboard</li></Link>
+                                        <Link to="/" onClick={logoutUser}><li className="px-6 py-1 hover:bg-gray-200" onClick={() => setIsOpen(false)}>Log out</li></Link>
                                     </ul>
                                 </div>
                             )}

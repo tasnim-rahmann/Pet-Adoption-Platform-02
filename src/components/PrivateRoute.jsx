@@ -7,7 +7,7 @@ const PrivateRoute = ({ children }) => {
 
     if (token && user === null) {
         return (
-            <div className="h-screen flex justify-center mt-12">
+            <div className="h-screen flex justify-center items-center">
                 <div className="w-12 h-12 border-4 border-gray-300 border-t-[#1C4A2A] rounded-full animate-spin"></div>
             </div>
         );

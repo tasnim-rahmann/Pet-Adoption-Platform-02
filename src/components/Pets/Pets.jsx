@@ -42,7 +42,9 @@ const Pet = () => {
                     <div className="w-12 h-12 border-4 border-gray-300 border-t-[#1C4A2A] rounded-full animate-spin"></div>
                 </div>
             ) : error ? (
-                <ErrorAlert errorMessege={"Please Try Again!"} />
+                <div className="h-screen">
+                    <ErrorAlert errorMessege={"Please Try Again!"} />
+                </div>
             ) : (
                 <>
                     <PetList
