@@ -9,6 +9,7 @@ import Dashboard from "../pages/Dashboard";
 import PrivateRoute from "../components/PrivateRoute";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Profile from "../pages/Profile";
+import PetDetail from "../pages/PetDetail";
 
 const AppRoutes = () => {
     return (
@@ -20,6 +21,7 @@ const AppRoutes = () => {
                 <Route path="faq" element={<FaQ />} />
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />
+                <Route path="pets/:petId" element={<PetDetail />} />
             </Route>
             {/* Private Routes */}
             <Route
