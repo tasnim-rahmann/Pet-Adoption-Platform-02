@@ -1,8 +1,10 @@
 import { FaUserCircle } from 'react-icons/fa';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { Link } from 'react-router';
+import useAuthContext from '../../hooks/useAuthContext';
 
 const NavBar = ({ sidebarOpen }) => {
+    const { logoutUser } = useAuthContext();
     return (
         <div className="navbar bg-base-100 border-b">
             <div className="flex-none lg:hidden">
@@ -30,7 +32,7 @@ const NavBar = ({ sidebarOpen }) => {
                             <Link to="/dashboard/profile">Profile</Link>
                         </li>
                         <li>
-                            <button>Logout</button>
+                            <button onClick={logoutUser}>Logout</button>
                         </li>
                     </ul>
                 </div>

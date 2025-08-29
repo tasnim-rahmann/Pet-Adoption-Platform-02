@@ -120,6 +120,7 @@ const useAuth = () => {
     const logoutUser = () => {
         setUser(null);
         setAuthToken(null);
+        localStorage.removeItem("cartId");
         localStorage.removeItem("authToken");
         window.location.reload();
     };
