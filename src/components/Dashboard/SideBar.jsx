@@ -16,6 +16,7 @@ const SideBar = () => {
         { to: "/pets/add", icon: FiPlusCircle, label: "Add Pets" },
         { to: "/categories", icon: FiTag, label: "Categories" },
         { to: "/categories/add", icon: FiPlusCircle, label: "Add Categories" },
+        { to: "/dashboard/cart/", icon: FiShoppingCart, label: "My Favourite" },
         { to: "/reviews", icon: FiStar, label: "Reviews" },
         { to: "/users", icon: FiUsers, label: "Users" }
     ];

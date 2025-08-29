@@ -2,7 +2,6 @@ import { Link } from "react-router";
 import defaultImage from "../../assets/default_product.jpg";
 
 const SinglePet = ({ pet }) => {
-    console.log(pet);
     return (
         <Link to={`/pets/${pet.id}`}>
             <div className="border border-gray-200 p-4 shadow-lg rounded-lg h-full flex flex-col justify-between" >

@@ -10,6 +10,7 @@ import PrivateRoute from "../components/PrivateRoute";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Profile from "../pages/Profile";
 import PetDetail from "../pages/PetDetail";
+import Cart from "../pages/Cart";
 
 const AppRoutes = () => {
     return (
@@ -33,6 +34,7 @@ const AppRoutes = () => {
                 }>
                 <Route index element={<Dashboard />} />
                 <Route path="profile" element={<Profile />} />
+                <Route path="cart" element={<Cart />} />
             </Route>
         </Routes>
     );
