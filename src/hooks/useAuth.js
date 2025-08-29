@@ -32,6 +32,49 @@ const useAuth = () => {
         }
     };
 
+    // Update User Profile
+    const updateUserProfile = async (data) => {
+        setErrorMessage("");
+        try {
+            await apiClient.put("/auth/users/me/", data, {
+                headers: { Authorization: `JWT ${authToken?.access}` }
+            });
+        } catch (err) {
+            const message =
+                err.response?.data
+                    ? Object.entries(err.response.data)
+                        .map(([key, value]) => `${key}: ${value.join(" ")}`)
+                        .join(" | ")
+                    : err.message;
+            setErrorMessage(message);
+            throw err;
+        }
+    };
+
+    // Password Change
+    const changePassword = async ({ current_password, new_password, re_new_password }) => {
+        setErrorMessage("");
+        try {
+            const response = await apiClient.post(
+                "/auth/users/set_password/",
+                { current_password, new_password, re_new_password },
+                { headers: { Authorization: `JWT ${authToken?.access}` } }
+            );
+            // Optionally, return success info
+            return response.data;
+        } catch (err) {
+            const message =
+                err.response?.data
+                    ? Object.entries(err.response.data)
+                        .map(([key, value]) => `${key}: ${value.join(" ")}`)
+                        .join(" | ")
+                    : err.message;
+            setErrorMessage(message);
+            throw err;
+        }
+    };
+
+
     // Login user
     const loginUser = async (userData) => {
         setErrorMessage("");
@@ -46,8 +89,7 @@ const useAuth = () => {
             // Fetch user using the returned token
             await fetchUserProfile(token);
         } catch (err) {
-            const message =
-                err.response?.data?.detail || JSON.stringify(err.response?.data) || err.message;
+            const message = err.response?.data?.detail || JSON.stringify(err.response?.data) || err.message;
             setErrorMessage(message);
             throw err;
         }
@@ -82,7 +124,15 @@ const useAuth = () => {
         window.location.reload();
     };
 
-    return { user, errorMessage, loginUser, registerUser, logoutUser };
+    return {
+        user,
+        errorMessage,
+        loginUser,
+        registerUser,
+        logoutUser,
+        updateUserProfile,
+        changePassword
+    };
 };
 
 export default useAuth;

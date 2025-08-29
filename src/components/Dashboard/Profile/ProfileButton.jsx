@@ -20,7 +20,7 @@ const ProfileButton = ({ isEditing, setIsEditing }) => {
                 </>
             ) : (
                 <button
-                    type="button"
+                    type="submit"
                     className="btn bg-green-700 text-white px-6 mt-4"
                     onClick={() => setIsEditing(true)}
                 >
