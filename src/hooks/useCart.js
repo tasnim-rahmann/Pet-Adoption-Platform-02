@@ -1,10 +1,9 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import authApiClient from "../services/auth-apiclient";
 
 const useCart = () => {
     const [cart, setCart] = useState(null);
     const [cartId, setCartId] = useState(() => localStorage.getItem("cartId"));
-    const [authToken] = useState(() => localStorage.getItem("authToken"));
     const [isLoading, setIsLoading] = useState(false);
 
     // Create a new Cart
@@ -22,7 +21,7 @@ const useCart = () => {
             } catch (err) {
                 console.log(err);
             }
-        }, [authToken, cartId]
+        }, [cartId]
     );
 
     // Add Cart Items
@@ -38,7 +37,7 @@ const useCart = () => {
             } finally {
                 setIsLoading(false);
             }
-        }, []
+        }, [cartId, createOrGetCart]
     );
 
     // Update Item Quantity
@@ -60,6 +59,15 @@ const useCart = () => {
             console.log(err);
         }
     }, [cartId]);
+
+    useEffect(() => {
+        const initializeCart = async () => {
+            setIsLoading(true);
+            await createOrGetCart();
+            setIsLoading(false);
+        };
+        initializeCart();
+    }, [createOrGetCart]);
 
     return { cart, isLoading, createOrGetCart, AddCartItems, updateCartItemQuantity, deleteCartItems };
 };

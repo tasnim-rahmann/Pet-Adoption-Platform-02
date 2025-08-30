@@ -9,7 +9,7 @@ const Cart = () => {
 
     useEffect(() => {
         createOrGetCart();
-    }, []);
+    }, [createOrGetCart]);
 
     useEffect(() => {
         setLocalCart(cart);
@@ -45,9 +45,15 @@ const Cart = () => {
     };
 
     const handleRemoveItem = async (itemId) => {
-        setLocalCart((prevLocalCart) => (
-            { ...prevLocalCart, items: prevLocalCart.items.filter((item) => item.id != itemId) }
-        ));
+        setLocalCart((prevLocalCart) => {
+            const updatedItems = prevLocalCart.items.filter((item) => item.id !== itemId);
+
+            return {
+                ...prevLocalCart,
+                items: updatedItems,
+                total_price: updatedItems.reduce((sum, item) => sum + item.total_price, 0),
+            };
+        });
 
         try {
             await deleteCartItems(itemId);
@@ -55,6 +61,7 @@ const Cart = () => {
             console.log(err);
         }
     };
+
 
     if (isLoading) {
         return (

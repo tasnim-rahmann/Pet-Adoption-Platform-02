@@ -7,6 +7,7 @@ import {
     FiTag,
     FiUsers
 } from "react-icons/fi";
+import { LuListOrdered } from "react-icons/lu";
 import { Link } from "react-router";
 
 const SideBar = () => {
@@ -17,6 +18,7 @@ const SideBar = () => {
         { to: "/categories", icon: FiTag, label: "Categories" },
         { to: "/categories/add", icon: FiPlusCircle, label: "Add Categories" },
         { to: "/dashboard/cart/", icon: FiShoppingCart, label: "My Favourite" },
+        { to: "/dashboard/orders/", icon: LuListOrdered, label: "Orders" },
         { to: "/reviews", icon: FiStar, label: "Reviews" },
         { to: "/users", icon: FiUsers, label: "Users" }
     ];
