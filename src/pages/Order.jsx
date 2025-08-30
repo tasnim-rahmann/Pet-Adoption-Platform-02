@@ -1,64 +1,35 @@
+import { useEffect, useState } from "react";
 import OrderCard from "../components/Orders/OrderCard";
+import authApiClient from "../services/auth-apiclient";
 
 const Order = () => {
-    const orders = [
-        {
-            id: "f6569780-480d-4464-a094-d54a89bc0bc8",
-            user: 3,
-            items: [
-                {
-                    id: 11,
-                    pet: {
-                        id: 3,
-                        name: "Dog3",
-                        price: 22
-                    },
-                    quantity: 2,
-                    price: 22,
-                    total_price: 44
-                },
-                {
-                    id: 12,
-                    pet: {
-                        id: 5,
-                        name: "Dog5",
-                        price: 40
-                    },
-                    quantity: 3,
-                    price: 30,
-                    total_price: 90
-                }
-            ],
-            status: "Not Paid",
-            total_price: 44,
-            created_at: "2025-08-20T17:16:08.614734Z"
-        },
-        {
-            id: "f6569780-480d-4464-a094-d54a89bc0bc8",
-            user: 3,
-            items: [
-                {
-                    id: 11,
-                    pet: {
-                        id: 3,
-                        name: "Dog3",
-                        price: 22
-                    },
-                    quantity: 2,
-                    price: 22,
-                    total_price: 44
-                },
-            ],
-            status: "Not Paid",
-            total_price: 44,
-            created_at: "2025-08-20T17:16:08.614734Z"
+    const [orders, setOrders] = useState([]);
+
+    const handleCancelOrder = async (orderId) => {
+        try {
+            const response = await authApiClient.post(`/orders/${orderId}/cancel/`);
+            if (response.status === 200) {
+                setOrders(prevOrder => prevOrder.map((order) => order.id === orderId ? { ...order, status: "Canceled" } : order));
+            }
+        } catch (err) {
+            console.log(err);
         }
-    ];
+    };
+
+    useEffect(() => {
+        authApiClient
+            .get("/orders/")
+            .then((res) => setOrders(res.data))
+            .catch((err) => console.log(err));
+    }, []);
+
+
     return (
         <div className="">
             <h1 className="text-2xl font-bold mb-6">This is Order Details</h1>
+            {orders.length === 0 && <div className="text-md text-gray-500">Your Order List is Empty!</div>}
             {orders.map((order, index) => (
-                <OrderCard key={index} order={order} />
+                <OrderCard key={index} order={order} onCancel={handleCancelOrder} />
             ))}
         </div>
     );

@@ -1,8 +1,22 @@
+import { useState } from "react";
 import useAuthContext from "../../hooks/useAuthContext";
 import OrderTable from "./OrderTable";
+import authApiClient from "../../services/auth-apiclient";
 
-const OrderCard = ({ order }) => {
+const OrderCard = ({ order, onCancel }) => {
     const { user } = useAuthContext();
+    const [status, setStatus] = useState(order.status);
+
+    const handleStatusChange = async (e) => {
+        const newStatus = e.target.value;
+        try {
+            const response = await authApiClient.patch(`/orders/${order.id}/update_status/ `, { status: newStatus });
+            if (response.status === 200) setStatus(newStatus);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
     return (
         <div className="bg-white rounded-lg shadow-lg mb-8 overflow-hidden">
             <div className="bg-gray-100 p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -12,15 +26,28 @@ const OrderCard = ({ order }) => {
                         Placed on {new Date(order.created_at).toLocaleDateString()}
                     </p>
                 </div>
-                <div className="flex gap-2">
-                    <span
-                        className={`px-3 py-1 rounded-full text-white text-sm font-medium ${order.status === "Not Paid" ? "bg-red-500" : "bg-green-500"
-                            }`}
-                    >
-                        {order.status}
-                    </span>
-                    {order.status !== "Delivered" && (
-                        <span className="text-blue-700 hover:underline">Cancel</span>
+                <div className="flex gap-3">
+                    {user.is_staff ? (
+                        <select
+                            value={status}
+                            onChange={handleStatusChange}
+                            className="px-3 py-1 text-white font-medium text-sm bg-green-700 focus:outline-0 rounded-sm"
+                        >
+                            <option value="Not Paid">Not Paid</option>
+                            <option value="Ready To Ship">Ready To Ship</option>
+                            <option value="Shipped">Shipped</option>
+                            <option value="Delivered">Delivered</option>
+                            <option value="Canceled">Canceled</option>
+                        </select>
+                    ) : (
+                        <span
+                            className={`px-3 py-1 rounded-full text-white text-sm font-medium ${order.status === "Not Paid" ? "bg-red-500" : "bg-green-500"}`}
+                        >
+                            {order.status}
+                        </span>
+                    )}
+                    {order.status !== "Canceled" && order.status !== "Delivered" && !user.is_staff && (
+                        <button onClick={() => onCancel(order.id)} className="text-blue-700 hover:underline">Cancel</button>
                     )}
                 </div>
             </div>
@@ -49,7 +76,7 @@ const OrderCard = ({ order }) => {
                     </button>
                 )}
             </div>
-        </div>
+        </div >
     );
 };
 
