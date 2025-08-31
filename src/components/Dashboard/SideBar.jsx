@@ -16,17 +16,18 @@ const SideBar = () => {
     const adminMenuItems = [
         { to: "/dashboard", icon: FiBarChart2, label: "Dashboard" },
         { to: "/pets", icon: FiPackage, label: "Pets" },
-        { to: "/pets/add", icon: FiPlusCircle, label: "Add Pets" },
-        { to: "/categories", icon: FiTag, label: "Categories" },
-        { to: "/categories/add", icon: FiPlusCircle, label: "Add Categories" },
+        { to: "/dashboard/pets/add", icon: FiPlusCircle, label: "Add Pets" },
+        { to: "/dashboard/categories", icon: FiTag, label: "Categories" },
+        { to: "/dashboard/categories/add", icon: FiPlusCircle, label: "Add Categories" },
         { to: "/dashboard/cart/", icon: FiShoppingCart, label: "My Favourite" },
         { to: "/dashboard/orders/", icon: LuListOrdered, label: "Orders" },
         { to: "/reviews", icon: FiStar, label: "Reviews" },
-        { to: "/users", icon: FiUsers, label: "Users" }
+        { to: "/dashboard/users", icon: FiUsers, label: "Users" }
     ];
     const userMenuItems = [
         { to: "/dashboard", icon: FiBarChart2, label: "Dashboard" },
         { to: "/pets", icon: FiPackage, label: "Pets" },
+        { to: "/dashboard/categories", icon: FiTag, label: "Categories" },
         { to: "/dashboard/cart/", icon: FiShoppingCart, label: "My Favourite" },
         { to: "/dashboard/orders/", icon: LuListOrdered, label: "Orders" },
         { to: "/reviews", icon: FiStar, label: "Reviews" },

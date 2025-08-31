@@ -12,6 +12,11 @@ import Profile from "../pages/Profile";
 import PetDetail from "../pages/PetDetail";
 import Cart from "../pages/Cart";
 import Order from "../pages/Order";
+import AddPet from "../pages/AddPet";
+import PaymentSuccess from "../pages/PaymentSuccess";
+import AddCategory from "../pages/AddCategories";
+import CategoryPage from "../pages/Categories";
+import UsersPage from "../pages/Users";
 
 const AppRoutes = () => {
     return (
@@ -37,6 +42,11 @@ const AppRoutes = () => {
                 <Route path="profile" element={<Profile />} />
                 <Route path="cart" element={<Cart />} />
                 <Route path="orders" element={<Order />} />
+                <Route path="pets/add" element={<AddPet />} />
+                <Route path="categories" element={<CategoryPage />} />
+                <Route path="categories/add" element={<AddCategory />} />
+                <Route path="users" element={<UsersPage />} />
+                <Route path="payment/success/" element={<PaymentSuccess />} />
             </Route>
         </Routes>
     );
