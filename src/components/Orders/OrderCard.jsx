@@ -21,15 +21,19 @@ const OrderCard = ({ order, onCancel }) => {
     const handlePayment = async () => {
         setIsLoading(true);
         try {
-            const response = await authApiClient.post("/payment/initiate/", { amount: order.total_price, orderId: order.id, numItems: order.items?.length });
+            const response = await authApiClient.post("/payment/initiate/", {
+                amount: order.total_price,
+                orderId: order.id,
+                numItems: order.items?.length
+            });
             if (response.data.payment_url) {
                 setIsLoading(false);
                 window.location.href = response.data.payment_url;
             } else {
-                alert("Payment Faild!");
+                alert("Payment Faild! Try again.");
             }
-        } catch (err) {
-            console.log(err);
+        } catch (error) {
+            console.log(error);
         }
     };
 

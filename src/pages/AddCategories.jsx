@@ -34,7 +34,7 @@ const CategoryPage = () => {
                 description: data.description,
             };
 
-            await apiClient.post("/categories/", payload);
+            await authApiClient.post("/categories/", payload);
             alert("Category added successfully!");
             reset();
             fetchCategories(); // refresh list
