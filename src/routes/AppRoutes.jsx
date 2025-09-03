@@ -18,6 +18,7 @@ import AddCategory from "../pages/AddCategories";
 import CategoryPage from "../pages/Categories";
 import UsersPage from "../pages/Users";
 
+
 const AppRoutes = () => {
     return (
         <Routes>

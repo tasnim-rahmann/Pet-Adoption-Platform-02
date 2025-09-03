@@ -4,6 +4,7 @@ import PetImageGallary from '../components/PetDetail/PetImageGallary';
 import { FaArrowLeft } from "react-icons/fa6";
 import { Suspense, useEffect, useState } from 'react';
 import apiClient from '../services/api-client';
+import ReviewSection from '../components/Reviews/ReviewSection';
 
 const PetDetail = () => {
     const [pet, setPet] = useState(null);
@@ -40,24 +41,27 @@ const PetDetail = () => {
             <Link to="/pets">
                 <h1 className="text-lg font-medium mb-4 flex items-center gap-2 hover:text-gray-500 cursor-pointer"><FaArrowLeft /> Back To Pets</h1>
             </Link>
-            <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12'>
-                <Suspense
-                    fallback={<div className='aspect-square bg-base-300 animate-pulse rounded-lg'></div>}
-                >
-                    <PetImageGallary images={pet.images} petName={pet.name} />
-                </Suspense>
-                <div className='flex flex-col justify-between'>
-                    <div className='space-y-1'>
-                        <h1 className='text-2xl font-medium'>Name: {pet.name}</h1>
-                        <p>Age: {pet.age}</p>
-                        <p>Breed: {pet.breed}</p>
-                        <p>Category: {pet.category?.name}</p>
-                        <p>Description: {pet.description}</p>
-                        <p>Availablity: {pet.availability ? "In Stock" : "Not Available"}</p>
-                        <p>Price: {pet.price}</p>
+            <div>
+                <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12'>
+                    <Suspense
+                        fallback={<div className='aspect-square bg-base-300 animate-pulse rounded-lg'></div>}
+                    >
+                        <PetImageGallary images={pet.images} petName={pet.name} />
+                    </Suspense>
+                    <div className='flex flex-col justify-between'>
+                        <div className='space-y-1'>
+                            <h1 className='text-2xl font-medium'>Name: {pet.name}</h1>
+                            <p>Age: {pet.age}</p>
+                            <p>Breed: {pet.breed}</p>
+                            <p>Category: {pet.category?.name}</p>
+                            <p>Description: {pet.description}</p>
+                            <p>Availablity: {pet.availability ? "In Stock" : "Not Available"}</p>
+                            <p>Price: {pet.price}</p>
+                        </div>
+                        <AddToCartButton pet={pet} />
                     </div>
-                    <AddToCartButton pet={pet} />
                 </div>
+                <ReviewSection />
             </div>
         </div>
     );
